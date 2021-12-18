@@ -28,3 +28,4 @@ path = "E:\\Smart Tech\\bdd100k\\images\\100k\\testing"
 for f in os.listdir(path):
     ext = os.path.splitext(f)[1]
     imgs.append(cv2.imread(os.path.join(path,f)))
+    img.show()
