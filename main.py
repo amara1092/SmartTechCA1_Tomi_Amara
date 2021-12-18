@@ -22,6 +22,22 @@ import cv2
 import os, os.path
 
 
+def gray_scale(img):
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return img
+
+
+def equalise(img):
+    img = cv2.equalizeHist(img)
+    return img
+
+
+def preprocess(img):
+    img = gray_scale(img)
+    img = equalise(img)
+    img = img/255
+    return img
+
 ##TRAIN##
 path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\train10'
 images=os.listdir(path)
@@ -66,3 +82,10 @@ for img in images:
 
 for i in range(len(img_data_val)):
     plt.imshow(img_data_val[i])
+    img = preprocess(img_data_val[i])
+    plt.imshow(img)
+    plt.axis("off")
+   # plt.show()
+
+data = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_val.json')
+print(data)
