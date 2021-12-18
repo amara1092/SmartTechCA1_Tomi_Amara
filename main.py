@@ -22,10 +22,47 @@ import cv2
 import os, os.path
 
 
-imgs = []
-path = "E:\\Smart Tech\\bdd100k\\images\\100k\\testing"
+##TRAIN##
+path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\train10'
+images=os.listdir(path)
+type(images)
+len(images)
 
-for f in os.listdir(path):
-    ext = os.path.splitext(f)[1]
-    imgs.append(cv2.imread(os.path.join(path,f)))
-    img.show()
+img_data_train=[]
+for img in images:
+    img_arr=cv2.imread(os.path.join(path, img))
+    img_data_train.append(img_arr)
+
+for i in range(len(img_data_train)):
+    plt.imshow(img_data_train[i])
+    #plt.show()
+
+##TEST##
+#path
+path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\test10'
+images=os.listdir(path)
+type(images)
+len(images)
+
+img_data_test=[]
+for img in images:
+    img_arr=cv2.imread(os.path.join(path,img))
+    img_data_test.append(img_arr)
+
+for i in range(len(img_data_test)):
+    plt.imshow(img_data_test[i])
+    #plt.show()
+
+##VALIDATION##
+path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\val10'
+images=os.listdir(path)
+type(images)
+len(images)
+
+img_data_val=[]
+for img in images:
+    img_arr=cv2.imread(os.path.join(path,img))
+    img_data_val.append(img_arr)
+
+for i in range(len(img_data_val)):
+    plt.imshow(img_data_val[i])
