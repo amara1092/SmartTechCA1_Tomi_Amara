@@ -39,7 +39,7 @@ def preprocess(img):
     return img
 
 ##TRAIN##
-path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\train10'
+path='C:\\Users\\smell\\Documents\\smarttech\\bdd100k_images_100k\\images\\100k\\test'
 images=os.listdir(path)
 type(images)
 len(images)
@@ -51,11 +51,12 @@ for img in images:
 
 for i in range(len(img_data_train)):
     plt.imshow(img_data_train[i])
+    #plt.imshow(img, cmap=plt.get_cmap('gray'))
     #plt.show()
 
 ##TEST##
 #path
-path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\test10'
+path='C:\\Users\\smell\\Documents\\smarttech\\bdd100k_images_100k\\images\\100k\\train'
 images=os.listdir(path)
 type(images)
 len(images)
@@ -67,10 +68,11 @@ for img in images:
 
 for i in range(len(img_data_test)):
     plt.imshow(img_data_test[i])
+    #plt.imshow(img, cmap=plt.get_cmap('gray'))
     #plt.show()
 
 ##VALIDATION##
-path='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100k\\val10'
+path='C:\\Users\\smell\\Documents\\smarttech\\bdd100k_images_100k\\images\\100k\\val'
 images=os.listdir(path)
 type(images)
 len(images)
@@ -83,9 +85,9 @@ for img in images:
 for i in range(len(img_data_val)):
     plt.imshow(img_data_val[i])
     img = preprocess(img_data_val[i])
-    plt.imshow(img)
+    plt.imshow(img, cmap=plt.get_cmap('gray'))
     plt.axis("off")
-   # plt.show()
+    plt.show()
 
-data = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_val.json')
-print(data)
+#data = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_val.json')
+#print(data)
