@@ -49,10 +49,10 @@ def createFolder(directory):
     except OSError:
         print('Error: Creating directory. ' + directory)
 
-# def newlabels(labels):
-#   updlabels = pd.DataFrame.from_records(labels)
-#   updlabels = updlabels['category'].unique().tolist()
-#   return ','.join(updlabels)
+def newlabels(labels):
+  updlabels = pd.DataFrame.from_records(labels)
+  updlabels = updlabels['category'].unique().tolist()
+  return ','.join(updlabels)
 
 
 ##TRAIN##
@@ -78,7 +78,7 @@ testpath='C:\\Users\\amara\\Downloads\\bdd100k_images_100k\\bdd100k\\images\\100
 images=os.listdir(testpath)
 type(images)
 len(images)
-img_size = 224
+img_size = 74
 
 img_data_val=[]
 for img in images:
@@ -117,11 +117,22 @@ for img in images:
 train_labels = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_train.json')
 #print(train_labels.head())
 #print(train_labels.labels[0])
-train_labels['newlabels'] = train_labels['labels'].map(newlabels)
+train_labels = train_labels['labels'].map(newlabels)
+rows = ['drivable area', 'lane']
+train_labels = train_labels.drop(rows = rows)
 print(train_labels)
+updlabels = ",".join(train_labels.newlabels).split(",")
+updlabels = list(set(updlabels))
+for updated in updlabels:
+    train_labels[updlabels] = train_labels['newlabels'].str.contains(updated)
+    train_labels[updated] = train_labels[updated].astype(int)
+    train_labels[updated] = train_labels[updated].astype(int)
+
 
 val_labels = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_val.json')
 #print(val_labels.head())
+
+###Data Processing#####
 
 
 
