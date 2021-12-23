@@ -19,7 +19,6 @@ import pickle
 import json
 import pandas as pd
 import os, os.path
-
 import glob
 
 
@@ -47,10 +46,8 @@ for target in category_list:
     data_validation[target] = data_validation[target].astype(int)
     #print(data_validation)
 
-columns = ['attributes', 'timestamp']
-data_validation = data_validation.drop(columns = columns)
 
-print(data_validation)
+
 
 
 
