@@ -114,20 +114,55 @@ for img in images:
 
 ##LABELS##
 ##TRAIN##
-train_labels = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_train.json')
+train_labels= pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_train.json')
 #print(train_labels.head())
 #print(train_labels.labels[0])
-train_labels = train_labels['labels'].map(newlabels)
-rows = ['drivable area', 'lane']
-train_labels = train_labels.drop(rows = rows)
-print(train_labels)
+train_labels['newlabels'] = train_labels['labels'].map(newlabels)
+#print(train_labels)
 updlabels = ",".join(train_labels.newlabels).split(",")
 updlabels = list(set(updlabels))
+# for upd in updlabels:
+#     if 'drivable area' in upd:
+#         del upd ['drivable area']
+#         print ('success')
+#     elif 'lane' in upd:
+#         del upd['lane']
+#         print ('success')
+#print(updlabels)
+datatest = train_labels.copy()
 for updated in updlabels:
-    train_labels[updlabels] = train_labels['newlabels'].str.contains(updated)
-    train_labels[updated] = train_labels[updated].astype(int)
-    train_labels[updated] = train_labels[updated].astype(int)
+    datatest[updated] = datatest['newlabels'].str.contains(updated)
+    datatest[updated] = datatest[updated].astype(int)
 
+print("1")
+labels = list(datatest.columns.values)
+labels = labels[3:]
+print(labels)
+counts = []
+for label in labels:
+    counts.append((label, datatest[label].sum()))
+info = pd.DataFrame(counts, columns=['Labels', 'Occurrence'])
+info = info.sort_values(['Occurrence']).reset_index(drop=True)
+
+sns.set_style("darkgrid")
+plt.figure(figsize=(12,10))
+order= ['train','motor','rider','bike','bus', 'truck', 'person','traffic light',
+        'traffic sign', 'lane','drivable area', 'car']
+ax= sns.barplot(labels, datatest.iloc[:,3:].sum().values, order= order)
+
+plt.title("Image Classification Labels", fontsize=22)
+plt.ylabel('Total Occurrences', fontsize=20)
+plt.xlabel('Labels', fontsize=20)
+
+#adding the text labels
+rects = ax.patches
+labels = info['Occurrence']
+for rect, label in zip(rects, labels):
+    height = rect.get_height()
+    ax.text(rect.get_x() + rect.get_width()/2, height + 5, label, ha='center', va='bottom', fontsize=16)
+plt.xticks(rotation=45, fontsize=16, ha='right')
+plt.yticks(fontsize=16)
+plt.show()
 
 val_labels = pd.read_json('C:\\Users\\amara\\Downloads\\labels\\bdd100k\\labels\\bdd100k_labels_images_val.json')
 #print(val_labels.head())
