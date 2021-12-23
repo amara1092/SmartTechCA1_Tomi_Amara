@@ -35,14 +35,22 @@ def newlabels(labels):
 
 
 data_val['updated_labels'] = data_val['labels'].map(newlabels)
-print(data_val)
+#print(data_val)
 
 category_list = ",".join(data_val.updated_labels).split(",")
 category_list = list(set(category_list))
-print(category_list)
+#print(category_list)
 
+data_validation = data_val.copy()
+for target in category_list:
+    data_validation[target] = data_validation['updated_labels'].str.contains(target)
+    data_validation[target] = data_validation[target].astype(int)
+    #print(data_validation)
 
+columns = ['attributes', 'timestamp']
+data_validation = data_validation.drop(columns = columns)
 
+print(data_validation)
 
 
 
