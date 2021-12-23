@@ -7,24 +7,25 @@ from tensorflow.keras.layers import Dense
 from tensorflow.keras.optimizers import Adam
 from keras.utils.np_utils import to_categorical
 import random
-import requests
 from PIL import Image
-
 from keras.layers.convolutional import Conv2D
 from keras.layers.convolutional import MaxPooling2D
+import requests
 from keras.layers import Flatten
 from keras.layers import Dropout
 from keras.preprocessing.image import ImageDataGenerator
 from keras.models import Model
 import pickle
-import pandas as pd
-import cv2
-import os, os.path
 import json
+import pandas as pd
+import os, os.path
+
+import glob
+
 
 data_val = pd.read_json('validation.json')
-print(data_val)
-data_val.info()
+#print(data_val)
+#data_val.info()
 
 
 def newlabels(labels):
@@ -33,8 +34,15 @@ def newlabels(labels):
     return ','.join(val)
 
 
-data_val['clean_labels'] = data_val['labels'].map(newlabels)
+data_val['updated_labels'] = data_val['labels'].map(newlabels)
 print(data_val)
+
+category_list = ",".join(data_val.updated_labels).split(",")
+category_list = list(set(category_list))
+print(category_list)
+
+
+
 
 
 
