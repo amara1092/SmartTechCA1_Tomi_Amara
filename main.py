@@ -18,9 +18,13 @@ from keras.models import Model
 import pickle
 import json
 import pandas as pd
+import seaborn as sns
 import os, os.path
 import glob
 
+
+# data = pd.read_csv('C:\\Users\\fehin\\OneDrive\\Attachments\\Desktop\\Smart Technologies\\GTS\\signnames.csv')
+# print(data)
 
 data_val = pd.read_json('validation.json')
 #print(data_val)
@@ -44,22 +48,67 @@ data_validation = data_val.copy()
 for target in category_list:
     data_validation[target] = data_validation['updated_labels'].str.contains(target)
     data_validation[target] = data_validation[target].astype(int)
-    #print(data_validation)
+    print(data_validation)
+
+    # drop attributes and timestamp columns, not neccessary for our model
+    columns = ['attributes', 'timestamp']
+    validation = data_val.drop(columns=columns)
+
+    # review columns have been dropped
+    print(data_validation)
+
+    # retreiving labels
+    labels = list(data_validation.columns.values)
+    labels = labels[3:]
+    print(labels)
+
+    counts = []
+    for label in labels:
+        counts.append((label, data_validation[label].sum()))
+    dv_results= pd.DataFrame(counts, columns=['Labels', 'Appearance'])
+    #df_stats_2 = df_stats_2.sort_values(['Occurrence']).reset_index(drop=True)
+    print(dv_results)
+
+    # set seaborn style and plt size
+    # sns.set_style("darkgrid")
+    # plt.figure(figsize=(12, 10))
 
 
 
+    # # create ascending order
+    # order = ['train', 'motor', 'rider', 'bike', 'bus', 'truck', 'person', 'traffic light',
+    #          'traffic sign', 'lane', 'drivable area', 'car']
+    #
+    # # create seaborn visual
+    # ax = sns.barplot(labels, data_validation.iloc[:, 3:].sum().values, order=order)
+    #
+    # # title and labels
+    # plt.title("Image Classification Labels", fontsize=22)
+    # plt.ylabel('Total Occurrences', fontsize=20)
+    # plt.xlabel('Labels', fontsize=20)
+    #
+    # # adding the text labels
+    # rects = ax.patches
+    # labels = dv_resuts['Occurrence']
+    # for rect, label in zip(rects, labels):
+    #     height = rect.get_height()
+    #     ax.text(rect.get_x() + rect.get_width() / 2, height + 5, label, ha='center', va='bottom', fontsize=16)
+    # plt.xticks(rotation=45, fontsize=16, ha='right')
+    # plt.yticks(fontsize=16)
+    # plt.show()
 
 
 
+    # To_remove_lst = ['car']
+    # #data_validation['updated_labels'] = [' '.join([y for y in x.split() if y not in To_remove_lst]) for x in data_validation['updated_labels']]
+    #
+    # data_validation['updated_labels'] = data_validation['updated_labels']
+    # print(data_validation)
 
 
-
-
-
-
-
-
-
+# for target in data_validation['updated_labels']:
+#     data_validation['updated_labels'].remove('car')
+#     print(data_validation)
 
 # def gray_scale(img):
 #     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
