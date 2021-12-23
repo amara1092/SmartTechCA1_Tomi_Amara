@@ -48,54 +48,33 @@ data_validation = data_val.copy()
 for target in category_list:
     data_validation[target] = data_validation['updated_labels'].str.contains(target)
     data_validation[target] = data_validation[target].astype(int)
-    print(data_validation)
+    #print(data_validation)
 
     # drop attributes and timestamp columns, not neccessary for our model
     columns = ['attributes', 'timestamp']
     validation = data_val.drop(columns=columns)
 
     # review columns have been dropped
-    print(data_validation)
+    #print(data_validation)
 
     # retreiving labels
     labels = list(data_validation.columns.values)
     labels = labels[3:]
-    print(labels)
+    #print(labels)
 
     counts = []
     for label in labels:
         counts.append((label, data_validation[label].sum()))
     dv_results= pd.DataFrame(counts, columns=['Labels', 'Appearance'])
     #df_stats_2 = df_stats_2.sort_values(['Occurrence']).reset_index(drop=True)
-    print(dv_results)
+    #print(dv_results)
 
-    # set seaborn style and plt size
-    # sns.set_style("darkgrid")
-    # plt.figure(figsize=(12, 10))
+    rowSums = data_validation.iloc[:, 3:].sum(axis=1)
+    multiLabels = rowSums.value_counts()
+    multiLabels = multiLabels.iloc[1:]
+    label_count = pd.DataFrame(multiLabels, columns=['Total # of images']).rename_axis('# of Labels', axis=1)
+    print(label_count)
 
-
-
-    # # create ascending order
-    # order = ['train', 'motor', 'rider', 'bike', 'bus', 'truck', 'person', 'traffic light',
-    #          'traffic sign', 'lane', 'drivable area', 'car']
-    #
-    # # create seaborn visual
-    # ax = sns.barplot(labels, data_validation.iloc[:, 3:].sum().values, order=order)
-    #
-    # # title and labels
-    # plt.title("Image Classification Labels", fontsize=22)
-    # plt.ylabel('Total Occurrences', fontsize=20)
-    # plt.xlabel('Labels', fontsize=20)
-    #
-    # # adding the text labels
-    # rects = ax.patches
-    # labels = dv_resuts['Occurrence']
-    # for rect, label in zip(rects, labels):
-    #     height = rect.get_height()
-    #     ax.text(rect.get_x() + rect.get_width() / 2, height + 5, label, ha='center', va='bottom', fontsize=16)
-    # plt.xticks(rotation=45, fontsize=16, ha='right')
-    # plt.yticks(fontsize=16)
-    # plt.show()
 
 
 
