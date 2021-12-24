@@ -43,7 +43,7 @@ data_val['updated_labels'] = data_val['labels'].map(newlabels)
 category_list = ",".join(data_val.updated_labels).split(",")
 category_list = list(set(category_list))
 #print(category_list)
-
+#
 data_validation = data_val.copy()
 for target in category_list:
     data_validation[target] = data_validation['updated_labels'].str.contains(target)
@@ -57,23 +57,23 @@ for target in category_list:
     # review columns have been dropped
     #print(data_validation)
 
-    # retreiving labels
-    labels = list(data_validation.columns.values)
-    labels = labels[3:]
-    #print(labels)
+    # # retreiving labels
+    # labels = list(data_validation.columns.values)
+    # labels = labels[3:]
+    # #print(labels)
 
-    counts = []
-    for label in labels:
-        counts.append((label, data_validation[label].sum()))
-    dv_results= pd.DataFrame(counts, columns=['Labels', 'Appearance'])
-    #df_stats_2 = df_stats_2.sort_values(['Occurrence']).reset_index(drop=True)
-    #print(dv_results)
+    # counts = []
+    # for label in labels:
+    #     counts.append((label, data_validation[label].sum()))
+    # dv_results= pd.DataFrame(counts, columns=['Labels', 'Appearance'])
+    # #print(dv_results)
+    #
+    # rowSums = data_validation.iloc[:, 3:].sum(axis=1)
+    # multiLabels = rowSums.value_counts()
+    # multiLabels = multiLabels.iloc[1:]
+    # label_count = pd.DataFrame(multiLabels, columns=['Total # of images']).rename_axis('# of Labels', axis=1)
+    # #print(label_count)
 
-    rowSums = data_validation.iloc[:, 3:].sum(axis=1)
-    multiLabels = rowSums.value_counts()
-    multiLabels = multiLabels.iloc[1:]
-    label_count = pd.DataFrame(multiLabels, columns=['Total # of images']).rename_axis('# of Labels', axis=1)
-    print(label_count)
 
 
 
